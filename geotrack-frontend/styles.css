@@ -1,0 +1,426 @@
+:root {
+    --primary: #007bff;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --light: #f8f9fa;
+    --dark: #343a40;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f5f5;
+    overflow-x: hidden;
+}
+
+/* AUTH SCREENS */
+.auth-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.app-icon {
+    font-size: 4rem;
+    color: var(--primary);
+}
+
+.app-title {
+    font-weight: 700;
+    color: var(--dark);
+    margin-top: 1rem;
+}
+
+/* MAIN SCREEN */
+.main-content {
+    padding-top: 56px;
+    padding-bottom: 20px;
+}
+
+.navbar {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* MAPA */
+.map-container {
+    position: relative;
+    height: 350px;
+    margin-bottom: 1rem;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.btn-floating {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* INFO CARDS */
+.info-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card i {
+    font-size: 1.8rem;
+    color: var(--primary);
+}
+
+.info-card small {
+    display: block;
+    color: #6c757d;
+    font-size: 0.75rem;
+}
+
+.info-card strong {
+    display: block;
+    color: var(--dark);
+    font-size: 0.95rem;
+}
+
+/* TABS */
+.nav-pills .nav-link {
+    color: #6c757d;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 0.85rem;
+}
+
+.nav-pills .nav-link.active {
+    background: var(--primary);
+}
+
+.nav-pills .nav-link i {
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 3px;
+}
+
+/* CARDS */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+/* DEVICE ITEM */
+.device-item {
+    background: var(--light);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.device-item.active {
+    background: #e7f3ff;
+    border-left: 4px solid var(--primary);
+}
+
+.device-info h6 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--dark);
+}
+
+.device-info small {
+    color: #6c757d;
+}
+
+.device-actions {
+    display: flex;
+    gap: 5px;
+}
+
+/* ZONE ITEM */
+.zone-item {
+    background: var(--light);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.zone-info h6 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--dark);
+}
+
+.zone-info small {
+    color: #6c757d;
+}
+
+/* ALERT ITEM */
+.alert-item {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid;
+    background: white;
+}
+
+.alert-item.nivel-1 {
+    border-color: var(--warning);
+    background: #fff8e1;
+}
+
+.alert-item.nivel-2 {
+    border-color: var(--warning);
+    background: #fff3cd;
+}
+
+.alert-item.nivel-3 {
+    border-color: var(--danger);
+    background: #f8d7da;
+}
+
+.alert-item.leida {
+    opacity: 0.6;
+}
+
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.alert-type {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.alert-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.alert-message {
+    font-size: 0.85rem;
+    color: var(--dark);
+}
+
+/* BUTTONS */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* MODALS */
+.modal-content {
+    border-radius: 15px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* EMPTY STATE */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* LOADING */
+.loading {
+    text-align: center;
+    padding: 20px;
+}
+
+.spinner-border {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+    .map-container {
+        height: 450px;
+    }
+    
+    .auth-card {
+        padding: 3rem;
+    }
+    
+    .container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-pills .nav-link {
+        font-size: 0.75rem;
+        padding: 8px 5px;
+    }
+    
+    .nav-pills .nav-link i {
+        font-size: 1rem;
+    }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* MARKER POPUP */
+.leaflet-popup-content-wrapper {
+    border-radius: 10px;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-content h6 {
+    margin: 0 0 5px 0;
+    color: var(--dark);
+}
+
+.popup-content small {
+    color: #6c757d;
+}
+/* Asegurar modal por encima del mapa/popup */
+.modal { z-index: 2000; }
+.modal-backdrop { z-index: 1990; }
+
+/* evitar desbordes de texto en tarjetas y listas */
+.device-item,
+.zone-item,
+.alert-item,
+.info-card {
+  min-width: 0;
+}
+
+.device-item .device-info,
+.zone-item .zone-info {
+  min-width: 0;            /* permite que el contenido se encoja */
+}
+
+.device-item .device-info h6,
+.device-item .device-info small,
+.zone-item .zone-info h6,
+.zone-item .zone-info small,
+.alert-item .alert-message,
+.alert-item .alert-time,
+.alert-item .alert-type,
+.info-card small,
+.info-card strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;  /* agrega "..." si no cabe */
+  white-space: nowrap;      /* evita saltos extraños */
+}
+
+/* en pantallas pequenas permite partir palabras largas (IMEI, tokens) */
+@media (max-width: 576px) {
+  .device-item .device-info small,
+  .zone-item .zone-info small,
+  .alert-item .alert-message {
+    white-space: normal;
+    overflow-wrap: anywhere;  /* parte cadenas largas si es necesario */
+  }
+}
+
+/* el mapa ocupa el 100% del contenedor visual */
+.map-container {
+  position: relative; /* ya lo tienes, reforzamos */
+}
+
+/* hace que #map llene totalmente .map-container */
+#map {
+  position: absolute;
+  inset: 0;           /* top:0; right:0; bottom:0; left:0; */
+  width: 100%;
+  height: 100%;
+}
+
+/* boton flotante sin tapar contenido en pantallas pequenas */
+.btn-floating {
+  right: 12px;
+  bottom: 12px;
+}
+
+/* pequeñas reducciones de fuentes para evitar desbordes en moviles */
+@media (max-width: 576px) {
+  .card-title { font-size: 1rem; }
+  .device-info h6,
+  .zone-info h6 { font-size: 0.95rem; }
+  .device-info small,
+  .zone-info small,
+  .alert-time,
+  .alert-message { font-size: 0.82rem; }
+}

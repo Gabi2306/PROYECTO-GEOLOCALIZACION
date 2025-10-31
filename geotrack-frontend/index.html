@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoTrack - Seguridad Infantil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- PANTALLA DE LOGIN -->
+    <div id="loginScreen" class="auth-screen">
+        <div class="container">
+            <div class="auth-card">
+                <div class="text-center mb-4">
+                    <i class="bi bi-geo-alt-fill app-icon"></i>
+                    <h2 class="app-title">GeoTrack</h2>
+                    <p class="text-muted">Seguridad en tiempo real</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mb-3">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                    </button>
+                    <div class="text-center">
+                        <a href="#" onclick="showRegister()" class="text-decoration-none">
+                            ¿No tienes cuenta? Regístrate
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE REGISTRO -->
+    <div id="registerScreen" class="auth-screen d-none">
+        <div class="container">
+            <div class="auth-card">
+                <div class="text-center mb-4">
+                    <i class="bi bi-person-plus-fill app-icon"></i>
+                    <h2 class="app-title">Crear Cuenta</h2>
+                </div>
+
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="regNombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="regEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control" id="regTelefono">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="regPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 mb-3">
+                        <i class="bi bi-check-circle me-2"></i>Registrarse
+                    </button>
+                    <div class="text-center">
+                        <a href="#" onclick="showLogin()" class="text-decoration-none">
+                            ¿Ya tienes cuenta? Inicia sesión
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA PRINCIPAL (DASHBOARD) -->
+    <div id="mainScreen" class="d-none">
+        <!-- Header -->
+        <nav class="navbar navbar-dark bg-primary fixed-top">
+            <div class="container-fluid">
+                <span class="navbar-brand">
+                    <i class="bi bi-geo-alt-fill me-2"></i>GeoTrack
+                </span>
+                <div class="d-flex align-items-center">
+                    <span class="text-white me-3" id="userName"></span>
+                    <button class="btn btn-sm btn-outline-light" onclick="logout()">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenido Principal -->
+        <div class="main-content">
+            
+            <!-- Mapa -->
+            <div class="map-container">
+                <div id="map"></div>
+                <button class="btn btn-primary btn-floating" onclick="centerMap()" title="Centrar ubicación">
+                    <i class="bi bi-crosshair"></i>
+                </button>
+            </div>
+
+            <!-- Info Rápida -->
+            <div class="container mt-3">
+                <div class="row g-2">
+                    <div class="col-6">
+                        <div class="info-card">
+                            <i class="bi bi-clock-history"></i>
+                            <div>
+                                <small>Última actualización</small>
+                                <strong id="lastUpdate">--</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="info-card">
+                            <i class="bi bi-speedometer2"></i>
+                            <div>
+                                <small>Velocidad</small>
+                                <strong id="currentSpeed">0 km/h</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs de Funcionalidades -->
+            <div class="container mt-3">
+                <ul class="nav nav-pills nav-fill mb-3" id="mainTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="dispositivos-tab" data-bs-toggle="pill" data-bs-target="#dispositivos" type="button">
+                            <i class="bi bi-phone"></i> Dispositivos
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="zonas-tab" data-bs-toggle="pill" data-bs-target="#zonas" type="button">
+                            <i class="bi bi-shield-check"></i> Zonas
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link position-relative" id="alertas-tab" data-bs-toggle="pill" data-bs-target="#alertas" type="button">
+                            <i class="bi bi-bell"></i> Alertas
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="alertBadge">0</span>
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="mainTabsContent">
+                    
+                    <!-- TAB DISPOSITIVOS -->
+                    <div class="tab-pane fade show active" id="dispositivos">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Mis Dispositivos</h5>
+                                <button class="btn btn-sm btn-primary mb-3" onclick="showAddDevice()">
+                                    <i class="bi bi-plus-circle me-1"></i>Agregar Dispositivo
+                                </button>
+                                <div id="deviceList"></div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Agregar Dispositivo -->
+                        <div class="modal fade" id="addDeviceModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Nuevo Dispositivo</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="addDeviceForm">
+                                            <div class="mb-3">
+                                                <label class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" id="deviceName" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">IMEI</label>
+                                                <input type="text" class="form-control" id="deviceIMEI" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary w-100">Crear</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB ZONAS SEGURAS -->
+                    <div class="tab-pane fade" id="zonas">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Zonas Seguras</h5>
+                                <button class="btn btn-sm btn-success mb-3" onclick="showAddZone()">
+                                    <i class="bi bi-plus-circle me-1"></i>Crear Zona
+                                </button>
+                                <div id="zoneList"></div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Agregar Zona -->
+                        <div class="modal fade" id="addZoneModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Nueva Zona Segura</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="addZoneForm">
+                                            <div class="mb-3">
+                                                <label class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" id="zoneName" placeholder="Casa, Escuela, etc." required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Latitud</label>
+                                                <input type="number" step="0.000001" class="form-control" id="zoneLat" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Longitud</label>
+                                                <input type="number" step="0.000001" class="form-control" id="zoneLng" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Radio (metros)</label>
+                                                <input type="number" class="form-control" id="zoneRadius" value="500" required>
+                                            </div>
+                                            <button type="button" class="btn btn-secondary w-100 mb-2" onclick="useCurrentLocation()">
+                                                <i class="bi bi-crosshair me-1"></i>Usar Ubicación Actual
+                                            </button>
+                                            <button type="submit" class="btn btn-success w-100">Crear Zona</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB ALERTAS -->
+                    <div class="tab-pane fade" id="alertas">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0">Alertas</h5>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="testAlert()">
+                                        <i class="bi bi-volume-up"></i> Test
+                                    </button>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="soundAlertToggle" checked>
+                                    <label class="form-check-label" for="soundAlertToggle">
+                                        Sonido de alertas activado
+                                    </label>
+                                </div>
+                                <div id="alertList"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Audio para alertas -->
+    <audio id="alertSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZizcIG2m98OScTgwPUKvo8LZjHAU5ktjy0HsvBSV5yvHckUELFGC16OqnVRULR6Hh8r9uIgUrgdDy2Ik3CBxqvfDinE0MD1Cs6PC2ZBwGOZPY8tB7LwUledDx3ZFCCxVhtejqp1UWC0ek4fK+biMFLIHR8tmJOAgcar3w4JxODA9RrOjwtmMcBzyV2fLPey8GJnvT8d2RQwsVY7jo6qdVFgtJpeLyvW0jBSyC0vLaiTgIHWq+8OCcTQwPUKzp8LdjHAU8ltnyz3wvByd91PHdkUMLFWS46OqnVRYKSqXi8r1tJAUsgtPy2ok4CB1qv/Dgm00ND1Ct6fC3YxwGPJfZ8tB9LwYnfdX" type="audio/wav">
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
